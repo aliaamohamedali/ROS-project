@@ -1,6 +1,7 @@
 #include "ros/ros.h"
-#include "nav_msgs/Odometry.h"
+#include <nav_msgs/Odometry.h>
 #include "sensor_msgs/Imu.h"
+#include "tf/transform_broadcaster.h"
 
 // Displacement
 double x = 0.0;
@@ -23,8 +24,8 @@ double delta_x;
 double delta_y;
 double delta_th;
 
-ros::Time current_time = ros::Time::now();
-ros::Time last_time = ros::Time::now();
+ros::Time current_time;
+ros::Time last_time;
 
 
 void cb(const sensor_msgs::Imu& msg){
@@ -37,7 +38,7 @@ void cb(const sensor_msgs::Imu& msg){
 
 	vx = vx + msg.linear_acceleration.x * dt + 0.5 * jx * dt * dt;
 	vy = vy + msg.linear_acceleration.y * dt + 0.5 * jx * dt * dt; 
-	vth = masg.angular_velocity.z;
+	vth = msg.angular_velocity.z;
 
 	delta_x = (vx * cos(th) - vy * sin(th)) * dt;
 	delta_y = (vx * sin(th) + vy * cos(th)) * dt;
@@ -54,7 +55,7 @@ int main(int argc, char** argv) {
 
 	ros::init(argc, argv, "odom_publisher");
 	ros::NodeHandle node;
-	ros::Subscriber sub = node.subscribe("mpu_data", 100, &cb);
+	ros::Subscriber sub = node.subscribe("imu", 100, &cb);
 	ros::Publisher pub = node.advertise<nav_msgs::Odometry>("odom", 100);
 
 	nav_msgs::Odometry odom;
@@ -92,6 +93,6 @@ int main(int argc, char** argv) {
 
 
 		last_time = current_time;
-		r.sleep()
+		r.sleep();
 	}
 }

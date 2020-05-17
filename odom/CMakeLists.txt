@@ -204,3 +204,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+add_executable(odom_publisher src/translate_imu_msg_to_odometry.cpp)
+target_link_libraries(odom_publisher ${catkin_LIBRARIES})
