@@ -204,3 +204,15 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+### My Addition
+add_executable(body_odom_transform src/body_odom_transform.cpp)
+target_link_libraries(body_odom_transform ${catkin_LIBRARIES})
+
+add_executable(camera_body_transform src/camera_body_transform.cpp)
+target_link_libraries(camera_body_transform ${catkin_LIBRARIES})
+
+
+
+
