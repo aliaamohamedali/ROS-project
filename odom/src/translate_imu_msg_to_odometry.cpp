@@ -2,15 +2,22 @@
 #include "nav_msgs/Odometry.h"
 #include "sensor_msgs/Imu.h"
 
-
+// Displacement
 double x = 0.0;
 double y = 0.0;
 double th = 0.0;
 
+// Velocity
 double vx = 0.0;
 double vy = 0.0;
 double vth = 0.0;
 
+// Jerk (Rate of change of acceleration)
+double jx = 0.0;
+double jy = 0.0;
+//double jth = 0.0;
+
+// Intermediates
 double dt;
 double delta_x;
 double delta_y;
@@ -24,13 +31,17 @@ void cb(const sensor_msgs::Imu& msg){
 
 	dt = (current_time - last_time).toSec();
 
-	// Newton's law
-	vx = vx + msg.linear_acceleration.x * dt;
-	vy = vy + msg.linear_acceleration.y * dt; 
+	// Newton's law -
+	jx = (msg.linear_acceleration.x - jx) / dt; 
+	jy = (msg.linear_acceleration.y - jy) / dt;
+
+	vx = vx + msg.linear_acceleration.x * dt + 0.5 * jx * dt * dt;
+	vy = vy + msg.linear_acceleration.y * dt + 0.5 * jx * dt * dt; 
+	vth = masg.angular_velocity.z;
 
 	delta_x = (vx * cos(th) - vy * sin(th)) * dt;
 	delta_y = (vx * sin(th) + vy * cos(th)) * dt;
-	delta_th = msg.angular_velocity.z * dt;
+	delta_th = vth * dt;
 
 	x += delta_x;
 	y += delta_y;
