@@ -32,7 +32,6 @@ bridge = CvBridge()
 
 msg_string = String()
 
-
 def callback(image_msg):
 
     #First convert the image to OpenCV image 
