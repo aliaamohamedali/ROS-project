@@ -3,6 +3,7 @@
 
 ## Steps running on Kinect camera
 
+0. Place the object_recognition folder in ros workspace src folder
 1. Place your model weights **.h5** file
 2. Run the roscore topic
    - **roscore**
