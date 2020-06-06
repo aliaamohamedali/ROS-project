@@ -70,8 +70,8 @@ int main(int argc, char** argv) {
 	
 	while(node.ok()){
 
-		ros::spinOnce();               // check for incoming messages
 		current_time = ros::Time::now();
+		ros::spinOnce();               // check for incoming messages
 
 		//next, we'll publish the odometry message over ROS
 		odom.header.stamp = current_time;
