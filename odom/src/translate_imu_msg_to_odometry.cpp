@@ -30,7 +30,7 @@ ros::Time last_time;
 
 void cb(const sensor_msgs::Imu& msg){
 
-	dt = (current_time - last_time).toSec();
+	dt = current_time.toSec() - last_time.toSec();
 
 	// Newton's law -
 	jx = (msg.linear_acceleration.x - jx) / dt; 
