@@ -5,7 +5,7 @@ Use Roboviz to view the camera and make sure that the following is selected to v
 * $ roslaunch fake_laser_pkg laser_start.launch
 * $ rosrun rviz rviz
 
-![Image from Mastering ROS for Robotics Programming]()
+![Image from Mastering ROS for Robotics Programming](https://github.com/aliaamohamedali/ROS-project/blob/master/photos/roslaser.png)
 
 
 * Set Fixed Frame as camera_depth_frame 
