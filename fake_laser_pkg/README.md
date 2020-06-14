@@ -7,6 +7,8 @@ Use Roboviz to view the camera and make sure that the following is selected to v
 
 ![Image from Mastering ROS for Robotics Programming](https://github.com/aliaamohamedali/ROS-project/blob/master/photos/roslaser.png)
 
+Refrence: Mastering ROS for Robotics Programming
+
 
 * Set Fixed Frame as camera_depth_frame 
 * Add the LaserScan in topic /scan.
