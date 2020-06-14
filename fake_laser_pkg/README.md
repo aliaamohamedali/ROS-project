@@ -17,4 +17,4 @@ Refrence: Mastering ROS for Robotics Programming
 
 
 Note: If the Camera Node gets suspended or stopped, use this in the terminal before using roslaunch
-$ sudo sh -c "echo -1 > /sys/module/usbcore/parameters/autosuspend"
+* $ sudo sh -c "echo -1 > /sys/module/usbcore/parameters/autosuspend"
