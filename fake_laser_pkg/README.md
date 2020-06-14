@@ -1,6 +1,9 @@
 # Guide 
-The node launches the camera driver "Freenect" automatically
+This node package launches the camera driver "Freenect" automatically
 Use Roboviz to view the camera and make sure that the following is selected to view the sensor_msgs/LaserScan:
+
+* $ roslaunch fake_laser_pkg laser_start.launch
+* $ rosrun rviz rviz
 
 ![Image from Mastering ROS for Robotics Programming]()
 
