@@ -30,7 +30,7 @@ ros::Time last_time;
 
 void cb(const sensor_msgs::Imu& msg){
 
-	dt = (current_time - last_time).toSec();
+	dt = current_time.toSec() - last_time.toSec();
 
 	// Newton's law -
 	jx = (msg.linear_acceleration.x - jx) / dt; 
@@ -70,8 +70,8 @@ int main(int argc, char** argv) {
 	
 	while(node.ok()){
 
-		ros::spinOnce();               // check for incoming messages
 		current_time = ros::Time::now();
+		ros::spinOnce();               // check for incoming messages
 
 		//next, we'll publish the odometry message over ROS
 		odom.header.stamp = current_time;
