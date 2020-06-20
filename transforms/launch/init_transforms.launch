@@ -1,0 +1,13 @@
+<launch>
+
+	<arg name="x_val" />
+	<arg name="y_val" />
+	<arg name="th_val" />
+
+
+	<node pkg="transforms" type="body_odom_transform" name="body-odom-broadcaster" />
+
+	<node pkg="transforms" type="camera_body_transform" 
+			args="$(arg x_val y_val th_val)" name="cam-body-frame-setter" />
+
+</launch>
