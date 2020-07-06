@@ -2,9 +2,13 @@
    <master auto="start"/>
 
  <!-- RUN PKG FOR LASERSCAN -->
+ <include file="$(find fake_laser_pkg)/launch/laser_start.launch"/>
+
+ <!-- run init_transforms --> 
+ <include file="$(find transforsm)/launch/init_transforms.launch"/>
 
  <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find maps)/my_map.pgm my_map_resolution"/>
+    <!-- node name="map_server" pkg="map_server" type="map_server" args="$(find maps)/my_map.pgm my_map_resolution"/-->
 
  <!--- Run AMCL --> 
     <include file="$(find amcl)/examples/amcl_omni.launch" />
