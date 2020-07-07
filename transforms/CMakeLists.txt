@@ -213,6 +213,7 @@ target_link_libraries(body_odom_transform ${catkin_LIBRARIES})
 add_executable(camera_body_transform src/camera_body_transform.cpp)
 target_link_libraries(camera_body_transform ${catkin_LIBRARIES})
 
-
+add_executable(odom_map_transform src/odom_map_transform.cpp)
+target_link_libraries(odom_map_transform ${catkin_LIBRARIES})
 
 

@@ -22,7 +22,7 @@ void cb(const nav_msgs::Odometry& msg){
 
 int main(int argc, char** argv){
 
-	ros::init(argc, argv, "odom_body_broadcatser");
+	ros::init(argc, argv, "odom_body_tf");
 	ros::NodeHandle node;
 	ros::Subscriber sub = node.subscribe("odom", 100, &cb);	// nav_msgs/Odometry
 

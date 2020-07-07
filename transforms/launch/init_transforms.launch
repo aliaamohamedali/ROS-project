@@ -4,10 +4,11 @@
 	<arg name="y_val" />
 	<arg name="th_val" />
 
+<node pkg="transforms" type="odom_map_transform" name="odom_map_frame_setter" />
 
-	<node pkg="transforms" type="body_odom_transform" name="body-odom-broadcaster" />
+	<node pkg="transforms" type="body_odom_transform" name="body_odom_broadcaster" />
 
 	<node pkg="transforms" type="camera_body_transform" 
-			args="$(arg x_val y_val th_val)" name="cam-body-frame-setter" />
+			args="$(arg x_val) $(arg y_val) $(arg th_val)" name="cam_body_frame_setter" />
 
 </launch>
