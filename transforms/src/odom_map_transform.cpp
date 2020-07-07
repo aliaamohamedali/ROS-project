@@ -30,7 +30,7 @@ int main(int argc, char** argv){
 		transform.setRotation(quat);
 
 		//send the transform
-		broadcaster.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "camera"));
+		broadcaster.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "odom"));
 		rate.sleep();
   	}
 

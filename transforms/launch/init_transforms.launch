@@ -1,8 +1,8 @@
 <launch>
 
-	<arg name="x_val" />
-	<arg name="y_val" />
-	<arg name="th_val" />
+	<arg name="x_val"  value="0"/>
+	<arg name="y_val"  value="0"/>
+	<arg name="th_val" value="0"/>
 
 <node pkg="transforms" type="odom_map_transform" name="odom_map_frame_setter" />
 
