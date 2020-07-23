@@ -1,0 +1,19 @@
+{
+  "name": "benzene",
+  "displayName": "benzene",
+  "expo": {
+    "name": "benzene",
+    "slug": "benzene",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "bundle"
+    },
+    "android": {
+      "package": "com.benzene"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  }
+}
