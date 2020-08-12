@@ -1,2 +1,2 @@
-## roslaunch freenect_launch freenect.launch
-## rosrun image_view image_view image:=/camera/rgb/image_color
+- **roslaunch freenect_launch freenect.launch**
+- **rosrun image_view image_view image:=/camera/rgb/image_color**
