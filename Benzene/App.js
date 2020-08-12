@@ -5,6 +5,7 @@ import {Button, Icon} from 'native-base'
 import axios from 'axios'
 import LottieView from 'lottie-react-native';
 import io from "socket.io-client";
+window.navigator.userAgent = 'react-native';
 
 import Voice, {
   SpeechRecognizedEvent,
@@ -19,17 +20,22 @@ export default class App extends React.Component {
     super(props);
     Voice.onSpeechError = this.onSpeechError;
     Voice.onSpeechResults = this.onSpeechResults;
+    this.socket = io("http://192.168.1.8:8000",{jsonp:false,transports:['websocket'],reconnection:false});
+    console.log(this.socket.connected)
+    this.socket.on('connect', () => {
+      console.log(this.socket.connected,"duuuude"); // true
+    });
+    this.socket.on('myres',res=>console.log('received res',res))
+    this.socket.on('connect_error',(err)=>console.log(err,err.code))
+    this.socket.on("chat", msg => {this.setState({ msg: msg});});
+    this.socket.on("rec",msg=>{
+      this.speak(msg['data'])})
+    this.socket.emit('req', "hello")
   }
   
   componentDidMount(){
     this.animation.play();
-    this.socket = io("http://192.168.43.152:3000");
-    this.socket.on("chat message", msg => {
-          this.setState({ msg: msg
-     });
-    this.socket.on("send",msg=>console.log("received successful",msg))
-    this.socket.emit('req', "hello")
-  });
+
     // client.onopen = () => {
     //   console.log('WebSocket Client Connected');
     //   client.send(JSON.stringify({
@@ -51,6 +57,8 @@ export default class App extends React.Component {
     this.speak("Sorry I didn't understand that")
   };
   onSpeechResults =async (e ) => {
+    console.log("speech results",e.value[0])
+    this.socket.emit('req', e.value[0])
     this.setState({
       results: e.value,
   });
@@ -81,7 +89,8 @@ export default class App extends React.Component {
       />
       <Button block style={{borderRadius:10,backgroundColor:'#137FC9',position:'absolute',top:'77%',width:'90%',alignSelf:'center'}} onPress={()=>
         // Voice.start('en-US')
-        this.socket.emit('req', "hello")
+        // this.socket.emit('req', "hello")
+        Voice.start('en-US')
         }>
         <Text style={{color:'white'}}>Command</Text>
       </Button>
