@@ -1,5 +1,5 @@
 
-# Object detecion and recognition 
+# Object detecion and recognition (Old Version)
 
 ## Steps running on Kinect camera
 
