@@ -33,7 +33,7 @@ def handle_message(message):
 def test_connect():
     print('connection received')
     emit('myres', {'data': 'Connected'})
-    pub.publish('remote')
+    #pub.publish('remote')
 
 @socketio.on('broadcast')
 def broadcast(message):
