@@ -1,6 +1,6 @@
 
 # Object detecion and recognition (Old Version)
-##[use YOLO_classify instead]
+## use YOLO_classify instead
 
 ## Steps running on Kinect camera
 
