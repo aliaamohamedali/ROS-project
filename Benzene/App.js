@@ -36,19 +36,6 @@ export default class App extends React.Component {
   componentDidMount(){
     this.animation.play();
 
-    // client.onopen = () => {
-    //   console.log('WebSocket Client Connected');
-    //   client.send(JSON.stringify({
-    //     type: "contentchange",
-    //     username: "joe",
-    //     content: "text"
-    //   }))
-
-    // };
-    // client.onmessage = (message) => {
-    //   console.log("response received from server")
-    //   console.log(message);
-    // };
   }
   onSpeechError = (e) => {
     this.setState({
