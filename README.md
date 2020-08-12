@@ -13,7 +13,11 @@ This folder contains launch files for running different project components (mapp
 This folder contains any generated maps we need.
 
 ### object-detection
-This folder contains the packages and nodes for the object detection and recognition task.
+This folder contains the packages and nodes for the object detection and recognition task [old version]
+
+### YOLO-CLassify
+This folder contains the packages and nodes for the object detection and recognition task [New version]
+
 
 ### odom
 This folder contains packages for drivers and/or nodes responsible for handling odometry data (imu & encoder readings)
