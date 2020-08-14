@@ -16,18 +16,17 @@ import actionlib
 
 from cv_bridge import CvBridge
 import csv
-import pandas as pd
 
 
 CONFIDENCE = 0.5
 SCORE_THRESHOLD = 0.5
 IOU_THRESHOLD = 0.5
-config_path = "/home/youssef/ROS_ws/src/yolo_classify/yolo_files/yolov2.cfg"
-weights_path = "/home/youssef/ROS_ws/src/yolo_classify/yolo_files/yolov2.weights"
+config_path = "/home/aliaa/workspaces/grad_project_catkin_workspace/src/yolo_classify/yolo_files/yolov2.cfg"
+weights_path = "/home/aliaa/workspaces/grad_project_catkin_workspace/src/yolo_classify/yolo_files/yolov2.weights"
 font_scale = 1
 thickness = 1
 
-LABELS = open("/home/youssef/ROS_ws/src/yolo_classify/yolo_files/coco.names").read().strip().split("\n")
+LABELS = open("/home/aliaa/workspaces/grad_project_catkin_workspace/src/yolo_classify/yolo_files/coco.names").read().strip().split("\n")
 colors = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
 
 net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
@@ -198,7 +197,7 @@ def update_object_map_from_file(object_pose):
 
           
 #True in exploration phase, False in navigation phase             
-UPDATE_OBJECTS_MAP = False
+UPDATE_OBJECTS_MAP = True
     
     
 def callback(image_msg):
