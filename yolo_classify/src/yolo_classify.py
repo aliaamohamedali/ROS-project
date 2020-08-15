@@ -16,7 +16,7 @@ import actionlib
 
 from cv_bridge import CvBridge
 import csv
-import pandas as pd
+
 
 
 CONFIDENCE = 0.5
@@ -40,6 +40,9 @@ rospy.init_node('yolo_classify', anonymous=True)
 
 pub_pose_msg = rospy.Publisher('goto_position', Pose, queue_size = 1)
 
+
+
+
 bridge = CvBridge()
 msg_string = String()
 current_odom = Odometry()
@@ -47,6 +50,7 @@ current_odom = Odometry()
 #objects pose on map
 objects_locations = {} 
 flag_file_read = True   
+
 
 #Funcion for Yolo detection of objects
 def yolo_function(image):
@@ -73,6 +77,7 @@ def yolo_function(image):
                 # returns the center (x, y)-coordinates of the bounding
                 # box followed by the boxes' width and height
                 box = detection[:4] * np.array([w, h, w, h])
+                
                 (centerX, centerY, width, height) = box.astype("int")
 
                 # use the center (x, y)-coordinates to derive the top and
@@ -88,7 +93,6 @@ def yolo_function(image):
 
     # perform the non maximum suppression given the scores defined before
     idxs = cv2.dnn.NMSBoxes(boxes, confidences, SCORE_THRESHOLD, IOU_THRESHOLD)
-
     font_scale = 1
     thickness = 1
 
@@ -101,12 +105,12 @@ def yolo_function(image):
             #published_msg = "x= %d : y= %d" %(x,y)
             #pub.publish(published_msg)
             w, h = boxes[i][2], boxes[i][3]
+            
             #published_msg = "w= %d : h= %d" %(w,h)
             #pub.publish(published_msg)
             # draw a bounding box rectangle and label on the image
             color = [int(c) for c in colors[class_ids[i]]]
             cv2.rectangle(image, (x, y), (x + w, y + h), color=color, thickness=thickness)
-
             text = "%s: %.2f" % (LABELS[class_ids[i]][:-1],confidences[i])
             
             # calculate text width & height to draw the transparent boxes as background of the text
@@ -118,6 +122,7 @@ def yolo_function(image):
             cv2.rectangle(overlay, box_coords[0], box_coords[1], color=color, thickness=cv2.FILLED)
             # add opacity (transparency to the box)
             image = cv2.addWeighted(overlay, 0.6, image, 0.4, 0)
+
             # now put the text (label: confidence %)
             cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=font_scale, color=(0, 0, 0), thickness=thickness)
@@ -125,16 +130,26 @@ def yolo_function(image):
             
             
             #update objects locations
-            objects_locations[LABELS[class_ids[i]][:-1]] =  current_odom.pose.pose
+            if(check_distance(x,y,w,h)):
+                objects_locations[LABELS[class_ids[i]][:-1]] =  current_odom.pose.pose
             
             
     cv2.imshow("image", image)
     #print(objects_locations.keys())
-       
+ 
+def check_distance(x,y,w,h):
+    if((depth_image[y,x]/10) <70.0 and (x+w<640 and (depth_image[y,x+w]/10)<70.0) and (y+h<480 and (depth_image[y+h,x]/10)<70.0)
+                and (depth_image[y+h,x+w]/10)<70.0 and (depth_image[y+(h/2),x+(w/2)]/10)<70.0):
+                    return True
+    else:
+        return False
+    
+      
 #Send Pose to robot to move             
 def send_goto_msg(object_string):
     #extract object name from msg [Data: "objectname"]
     object_name =  str(object_string)[7:-1]
+
     if(object_name in objects_locations.keys()):
         print "Benzo is going to Object: %s" % (object_name)
         pub_pose_msg.publish(objects_locations[object_name])
@@ -149,12 +164,11 @@ def get_odmetry(odom):
        global current_odom
        current_odom = odom
        
-       
+depth_image =0    
 def get_distance(img):
+       global depth_image
        bridge=CvBridge()
        depth_image = bridge.imgmsg_to_cv2(img, desired_encoding="32FC1")
-       #distance from first obstacle in mm
-       print "Distance from obstacle: %.2f" % (depth_image[10,10]/10)
 
 
 
@@ -198,7 +212,7 @@ def update_object_map_from_file(object_pose):
 
           
 #True in exploration phase, False in navigation phase             
-UPDATE_OBJECTS_MAP = False
+UPDATE_OBJECTS_MAP = True
     
     
 def callback(image_msg):
@@ -220,7 +234,7 @@ def callback(image_msg):
     
 rospy.Subscriber("/camera/rgb/image_color", Image, callback, queue_size = 1, buff_size = 16777216)
 
-#rospy.Subscriber('/camera/depth/image_raw',Image,get_distance)
+rospy.Subscriber('/camera/depth/image_raw',Image,get_distance)
 
 #position of the object in the map
 rospy.Subscriber('/rtabmap/odom', Odometry, get_odmetry)
