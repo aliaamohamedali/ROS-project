@@ -138,8 +138,9 @@ def yolo_function(image):
     #print(objects_locations.keys())
  
 def check_distance(x,y,w,h):
-    if((depth_image[y,x]/10) <70.0 and (x+w<640 and (depth_image[y,x+w]/10)<70.0) and (y+h<480 and (depth_image[y+h,x]/10)<70.0)
-                and (depth_image[y+h,x+w]/10)<70.0 and (depth_image[y+(h/2),x+(w/2)]/10)<70.0):
+
+    if((depth_image[y,x]/10) <60.0 and (x+w<640 and (depth_image[y,x+w]/10)<60.0) and (y+h<480 and (depth_image[y+h,x]/10)<60.0)
+                and (depth_image[y+h,x+w]/10)<60.0 and (depth_image[y+(h/2),x+(w/2)]/10)<60.0):
                     return True
     else:
         return False
@@ -169,6 +170,7 @@ def get_distance(img):
        global depth_image
        bridge=CvBridge()
        depth_image = bridge.imgmsg_to_cv2(img, desired_encoding="32FC1")
+
 
 
 
