@@ -84,8 +84,6 @@ export default class App extends React.Component {
         source={require('./assets/robot-anim-1.json')}
       />
       <Button disabled={false} block style={{borderRadius:10,backgroundColor:'#137FC9',position:'absolute',top:'70%',width:'90%',alignSelf:'center'}} onPress={()=>
-        // Voice.start('en-US')
-        // this.socket.emit('req', "hello")
         Voice.start('en-US')
         }>
         <Text style={{color:'white'}}>Command</Text>
