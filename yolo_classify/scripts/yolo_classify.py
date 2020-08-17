@@ -135,7 +135,7 @@ def yolo_function(image):
             	objects_locations[LABELS[class_ids[i]][:-1]] =  current_odom.pose.pose
             
             
-    cv2.imshow("image", image)
+    #cv2.imshow("image", image)
     #print(objects_locations.keys())
  
 def check_distance(x,y,w,h):
@@ -153,7 +153,6 @@ def check_distance(x,y,w,h):
 def send_goto_msg(object_string):
     #extract object name from msg [Data: "objectname"]
     object_name =  str(object_string)[7:-1]
-
     if(object_name in objects_locations.keys()):
         print "Benzo is going to Object: %s" % (object_name)
         pub_pose_msg.publish(objects_locations[object_name])
